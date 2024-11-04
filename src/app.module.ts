@@ -1,5 +1,5 @@
 import configuration from '@/configs'
-import { RoleModule, UserModule } from "@/modules";
+import { AuthModule, RoleModule, UserModule } from "@/modules";
 
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
@@ -7,6 +7,7 @@ import { ConfigModule } from "@nestjs/config";
 
 @Module({
   imports: [
+    AuthModule,
     UserModule,
     RoleModule,
     ConfigModule.forRoot({

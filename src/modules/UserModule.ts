@@ -13,7 +13,7 @@ import { RoleModule } from "./RoleModule";
     imports: [OrmModule, RoleModule],
     providers: [
         {
-            provide: "I_USER",
+            provide: "USER_PROVIDER",
             useClass: UserService
         },
         {
@@ -22,5 +22,6 @@ import { RoleModule } from "./RoleModule";
             inject: ['DATA_SOURCE'],
         },
     ],
+    exports: ["USER_PROVIDER"]
 })
 export class UserModule {}

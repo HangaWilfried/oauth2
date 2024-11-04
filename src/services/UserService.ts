@@ -1,6 +1,14 @@
-import { Role, User } from "@/models";
+import { 
+    CreateUserDto, 
+    UserEditDto, 
+    UserDto, 
+    RoleDto,
+} from "@/dtos";
+import { User } from "@/models";
 import { IRole, IUser } from "@/interfaces";
-import { CreateUserDto, UserDto, UserEditDto, TelDto, RoleDto } from "@/dtos";
+import { toUserDto, toContactString } from "@/utils/method";
+
+import * as argon2 from "argon2"
 
 import { Repository } from "typeorm";
 import { Inject, Injectable } from "@nestjs/common";
@@ -11,7 +19,7 @@ export class UserService implements IUser {
         @Inject('USER_REPOSITORY')
         private userRepository: Repository<User>,
 
-        @Inject("I_ROLE") private I_Role: IRole
+        @Inject("ROLE_PROVIDER") private roleservice: IRole
     ) {}
 
 
@@ -23,10 +31,15 @@ export class UserService implements IUser {
     }
 
     async createUser(user: CreateUserDto): Promise<string> {
+        const { contact, password, ...data } = user;
+        const hashPassword = await argon2.hash(password)
+        
         const createdUser = await this.userRepository.create({
-            ...user,
-            contact: toContactString(user.contact)
+            contact: toContactString(contact),
+            password: hashPassword,
+            ...data
         });
+        
         const newUser = await this.userRepository.save(createdUser);
         return newUser.id;
     }
@@ -64,7 +77,7 @@ export class UserService implements IUser {
     async assignRole(userId: string, role: RoleDto): Promise<void> {
         const user = await this.findById(userId)
         if (user) {
-            const newRole = await this.I_Role.findById(role.id)
+            const newRole = await this.roleservice.findById(role.id)
             if (newRole) {
                 if (!user.roles.map(thisrole => thisrole.id).includes(role.id)) {
                     user.roles.push(newRole)
@@ -80,27 +93,10 @@ export class UserService implements IUser {
             relations: ['roles'],
         });
     }
-}
 
-
-function toContactDto(tel: string): TelDto {
-    const [countryCode, number] = tel.split(";")
-    return { countryCode, number }
-}
-
-function toContactString(tel: TelDto | undefined): string | undefined {
-    return tel ? `${tel.countryCode};${tel.number}` : undefined
-}
-
-function toUserDto(user: User): UserDto {
-    console.log(user)
-    return {
-        id: user.id,
-        email: user.email,
-        roles: user.roles,
-        gender: user.gender,
-        lastname: user.lastname,
-        firstname: user.firstname,
-        contact: toContactDto(user.contact),
+    findByEmail(email: string): Promise<User | null> {
+        return this.userRepository.findOne({
+            where: { email },
+        });   
     }
 }

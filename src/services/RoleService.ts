@@ -1,5 +1,6 @@
 import { Role } from "@/models";
 import { IRole } from "@/interfaces";
+import { toRoleDto } from "@/utils/method";
 import { CreateRoleDto, RoleDto } from "@/dtos";
 
 import { In, Repository } from "typeorm";
@@ -30,12 +31,12 @@ export class RoleService implements IRole {
 
     async getAllRoles(roleids?: string[]): Promise<RoleDto[]> {
         const roles = await this.fetchAllRoles(roleids)
-        return roles.map(this.toRoleDto)
+        return roles.map(toRoleDto)
     }
     
     async getRoleById(id: string): Promise<RoleDto> {
         const role = await this.findById(id);
-        if (role) return this.toRoleDto(role);
+        if (role) return toRoleDto(role);
         else throw new Error("Role not found");
     }
 
@@ -52,14 +53,6 @@ export class RoleService implements IRole {
         const existingRole = await this.findById(id);
         if (existingRole) await this.roleRepository.delete(id);
         else throw new Error("Role not found");
-    }
-
-    toRoleDto(role: Role): RoleDto {
-       return {
-            id: role.id,
-            name: role.name,
-            scope: role.scope,
-       } 
     }
 
     async findById(id: string): Promise<Role | null> {

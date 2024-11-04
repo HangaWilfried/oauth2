@@ -12,7 +12,7 @@ import { Module } from "@nestjs/common";
     imports: [OrmModule],
     providers: [
         {
-            provide: "I_ROLE",
+            provide: "ROLE_PROVIDER",
             useClass: RoleService
         },
         {
@@ -23,6 +23,6 @@ import { Module } from "@nestjs/common";
             inject: ['DATA_SOURCE'],
         },
     ],
-    exports: ["I_ROLE"]
+    exports: ["ROLE_PROVIDER"]
 })
 export class RoleModule {}

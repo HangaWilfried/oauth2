@@ -1,21 +1,28 @@
 import { IUser } from "@/interfaces";
+
+import { RessourceGuard } from "@/guards";
+
 import { UserDto, CreateUserDto, RoleDto } from "@/dtos";
 
 import { 
     Body, 
     Controller, 
+    UseGuards,
     Delete, 
     Get, 
     Inject, 
     Param, 
     Post, 
-    Put 
+    Put, 
 } from "@nestjs/common";
 
 
+@UseGuards(RessourceGuard)
 @Controller("user")
 export class UserController {
-    constructor(@Inject("I_USER") private I_User: IUser) {}
+    constructor(
+        @Inject("USER_PROVIDER") private I_User: IUser
+    ) {}
 
 
     @Get()

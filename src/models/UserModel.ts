@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn
 } from 'typeorm';
 // import { Gender } from "@/dtos";
-import { Role } from "./role.model";
+import { Role } from "./RoleModel";
 
 @Entity()
 export class User {

@@ -14,10 +14,7 @@ export const databaseProviders = [
       const dataSource = new DataSource({
         type: 'sqlite',
         database: configService.get<string>("db.sqlite.database")!,
-        entities: [
-          User,
-          Role
-        ],
+        entities: [User, Role],
         synchronize: true,
       });
 

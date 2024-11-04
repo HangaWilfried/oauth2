@@ -4,30 +4,30 @@ import { Body, Controller, Delete, Get, Inject, Param, Post } from "@nestjs/comm
 
 @Controller("role")
 export class RoleController {
-    constructor(@Inject("I_ROLE") private I_Role: IRole) {}
+    constructor(@Inject("ROLE_PROVIDER") private roleservice: IRole) {}
 
     @Post()
     async addRole(@Body() role: CreateRoleDto): Promise<string> {
-        return this.I_Role.addRole(role);
+        return this.roleservice.addRole(role);
     }
     
     @Get()
     async getAllRoles(): Promise<RoleDto[]> {
-        return this.I_Role.getAllRoles();
+        return this.roleservice.getAllRoles();
     }
     
     @Get(":id")
     async getRoleById(@Param("id") id: string): Promise<RoleDto> {
-        return this.I_Role.getRoleById(id)
+        return this.roleservice.getRoleById(id)
     }
     
     @Post(":id")
     async editRole(@Param("id") id: string, @Body() role: RoleDto): Promise<void> {
-        return this.I_Role.editRole(id, role)
+        return this.roleservice.editRole(id, role)
     }
     
     @Delete("id")
     async deleteRole(@Param("id") id: string): Promise<void> {
-        return this.I_Role.deleteRole(id)
+        return this.roleservice.deleteRole(id)
     }
 }
