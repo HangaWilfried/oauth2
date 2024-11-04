@@ -1,6 +1,6 @@
 import { IUser } from "@/interfaces";
 
-import { ResourceGuard } from "@/guards";
+import { ResourceGuard, Scope } from "@/guards";
 
 import { UserDto, RoleDto } from "@/dtos";
 
@@ -20,6 +20,7 @@ export class UserController {
   constructor(@Inject("USER_PROVIDER") private I_User: IUser) {}
 
   @Get()
+  @Scope("user:read")
   @UseGuards(ResourceGuard)
   getAllUsers(): Promise<UserDto[]> {
     return this.I_User.getAllUsers();
