@@ -1,10 +1,10 @@
-import { 
-  Entity, 
-  Column, 
-  ManyToMany, 
+import {
+  Entity,
+  Column,
+  ManyToMany,
   CreateDateColumn,
-  PrimaryGeneratedColumn
-} from 'typeorm';
+  PrimaryGeneratedColumn,
+} from "typeorm";
 // import { Gender } from "@/dtos";
 import { Role } from "./RoleModel";
 
@@ -17,11 +17,11 @@ export class User {
   password: string;
 
   @Column({
-    unique: true
+    unique: true,
   })
   email: string;
 
-/*
+  /*
   @Column({
     type: "enum",
     enum: Gender,
@@ -39,12 +39,12 @@ export class User {
   firstname: string;
 
   @Column({
-    unique: true
+    unique: true,
   })
   contact: string;
 
   @ManyToMany(() => Role, (role) => role.users)
-  roles: Role[]
+  roles: Role[];
 
   @CreateDateColumn({ type: "datetime" })
   public created_at: Date;

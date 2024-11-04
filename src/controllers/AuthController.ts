@@ -2,20 +2,20 @@ import { IAuth } from "@/interfaces";
 
 import { CreateUserDto, CredentialDto } from "@/dtos";
 
-import { Body, Controller, Inject, Post, Request } from "@nestjs/common";
+import { Body, Controller, Inject, Post } from "@nestjs/common";
 
 
 @Controller("auth")
 export class AuthController {
-    constructor(@Inject("AUTH") private authservice: IAuth) {}
+  constructor(@Inject("AUTH") private authService: IAuth) {}
 
-    @Post("login")
-    login(@Body() credential: CredentialDto) {
-        return this.authservice.doLogin(credential)
-    }
+  @Post("login")
+  login(@Body() credential: CredentialDto) {
+    return this.authService.doLogin(credential);
+  }
 
-    @Post("register")
-    createAccount(@Body() user: CreateUserDto) {
-        return this.authservice.doCreateAccount(user)
-    }
+  @Post("register")
+  createAccount(@Body() user: CreateUserDto) {
+    return this.authService.doCreateAccount(user);
+  }
 }

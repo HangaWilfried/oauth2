@@ -4,20 +4,15 @@ import { IAuth } from "@/interfaces";
 
 import { CredentialDto, PayloadDto } from "@/dtos";
 
-import { 
-  Inject, 
-  Injectable, 
-  UnauthorizedException 
-} from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 
-import { ExtractJwt, Strategy } from 'passport-jwt';
+import { ExtractJwt, Strategy } from "passport-jwt";
 
-import { PassportStrategy } from '@nestjs/passport';
-
+import { PassportStrategy } from "@nestjs/passport";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(@Inject("AUTH") private authservice: IAuth) {
+  constructor(@Inject("AUTH") private authService: IAuth) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -26,8 +21,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(credential: CredentialDto): Promise<PayloadDto> {
-    const payload = await this.authservice.validateUser(credential);
-    if (payload) return payload
+    const payload = await this.authService.validateUser(credential);
+    if (payload) return payload;
     else throw new UnauthorizedException();
   }
 }

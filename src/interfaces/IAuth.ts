@@ -1,13 +1,9 @@
-import { 
-    CredentialDto, 
-    CreateUserDto, 
-    PayloadDto,
-} from "@/dtos";
+import { CredentialDto, CreateUserDto, PayloadDto } from "@/dtos";
 
 export interface IAuth {
-    doLogin(credential: CredentialDto): Promise<Record<string, string>>;
+  doLogin(credential: CredentialDto): Promise<Record<string, string>>;
 
-    validateUser(credential: CredentialDto): Promise<PayloadDto | null>
+  validateUser(credential: CredentialDto): Promise<PayloadDto | null>;
 
-    doCreateAccount(user: CreateUserDto): Promise<string>;
+  doCreateAccount(user: CreateUserDto): Promise<string>;
 }

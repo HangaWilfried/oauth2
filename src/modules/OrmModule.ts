@@ -1,18 +1,17 @@
-import { DataSource } from 'typeorm';
-import { Module } from '@nestjs/common';
+import { DataSource } from "typeorm";
+import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
-import { Role, User } from "@/models"
-
+import { Role, User } from "@/models";
 
 export const databaseProviders = [
   {
-    provide: 'DATA_SOURCE',
+    provide: "DATA_SOURCE",
     imports: [ConfigModule],
     inject: [ConfigService],
     useFactory: async (configService: ConfigService) => {
       const dataSource = new DataSource({
-        type: 'sqlite',
+        type: "sqlite",
         database: configService.get<string>("db.sqlite.database")!,
         entities: [User, Role],
         synchronize: true,
@@ -22,7 +21,6 @@ export const databaseProviders = [
     },
   },
 ];
-
 
 @Module({
   providers: [...databaseProviders],
