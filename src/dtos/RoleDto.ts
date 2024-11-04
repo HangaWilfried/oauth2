@@ -1,4 +1,4 @@
-import { IsString } from "class-validator";
+import { IsString, IsOptional } from "class-validator";
 
 export class CreateRoleDto {
     @IsString()
@@ -13,8 +13,10 @@ export class RoleDto {
     id: string
 
     @IsString()
-    name?: string
+    @IsOptional()
+    name: string
     
     @IsString()
-    scope?: string
+    @IsOptional()
+    scope: string
 }

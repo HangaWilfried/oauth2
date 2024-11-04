@@ -17,7 +17,6 @@ import {
 } from "@nestjs/common";
 
 
-@UseGuards(RessourceGuard)
 @Controller("user")
 export class UserController {
     constructor(
@@ -26,13 +25,9 @@ export class UserController {
 
 
     @Get()
+    @UseGuards(RessourceGuard)
     getAllUsers(): Promise<UserDto[]> {
         return this.I_User.getAllUsers();
-    }
-
-    @Post()
-    createUser(@Body() user: CreateUserDto): Promise<string> {
-        return this.I_User.createUser(user);
     }
     
     @Get(":id")

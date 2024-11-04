@@ -9,5 +9,5 @@ export interface IAuth {
 
     validateUser(credential: CredentialDto): Promise<PayloadDto | null>
 
-    doCreateAccount(user: CreateUserDto): Promise<void>;
+    doCreateAccount(user: CreateUserDto): Promise<string>;
 }

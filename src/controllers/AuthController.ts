@@ -9,12 +9,12 @@ import { Body, Controller, Inject, Post, Request } from "@nestjs/common";
 export class AuthController {
     constructor(@Inject("AUTH") private authservice: IAuth) {}
 
-    @Post()
+    @Post("login")
     login(@Body() credential: CredentialDto) {
         return this.authservice.doLogin(credential)
     }
 
-    @Post()
+    @Post("register")
     createAccount(@Body() user: CreateUserDto) {
         return this.authservice.doCreateAccount(user)
     }

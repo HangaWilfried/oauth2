@@ -42,7 +42,7 @@ export class AuthService implements IAuth {
        } 
     }
 
-    async doCreateAccount(user: CreateUserDto): Promise<void> {
-        await this.userservice.createUser(user)
+    doCreateAccount(user: CreateUserDto): Promise<string> {
+        return this.userservice.createUser(user)
     }
 }
